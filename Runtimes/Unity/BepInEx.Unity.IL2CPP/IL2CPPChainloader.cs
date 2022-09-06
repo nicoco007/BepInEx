@@ -8,6 +8,7 @@ using BepInEx.Preloader.Core;
 using BepInEx.Preloader.Core.Logging;
 using BepInEx.Unity.IL2CPP.Hook;
 using BepInEx.Unity.IL2CPP.Logging;
+using BepInEx.Unity.IL2CPP.Threading;
 using BepInEx.Unity.IL2CPP.Utils;
 using Il2CppInterop.Runtime.InteropTypes;
 using UnityEngine;
@@ -92,6 +93,10 @@ public class IL2CPPChainloader : BaseChainloader<BasePlugin>
                 }
 
                 unhook = true;
+
+                Logger.Log(LogLevel.Debug, "Initializing Il2CppSynchronizationContext");
+                AddUnityComponent<Il2CppSynchronizationContextRunner>();
+                Il2CppSynchronizationContext.InitializeSynchronizationContext();
 
                 Instance.Execute();
             }
